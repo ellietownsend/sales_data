@@ -1,9 +1,12 @@
 import {useActionState} from 'react'
 import { useAuth } from '../context/AuthContext';
+import { useNavigate, Link } from 'react-router-dom';
+import Dashboard from '../routes/Dashboard';
 
 
 const Signin = () => {
   const { signInUser } = useAuth();
+  const navigate = useNavigate();
 
   const [error, submitAction, isPending] = useActionState(
     async (previousState, formData) => {
@@ -20,7 +23,7 @@ const Signin = () => {
         return new Error(signInError);
       }
       if (success && data?.session) {
-        //Navigate to /dashboard
+        navigate('/dashboard')
         return null;
       }
       return null;
@@ -44,9 +47,9 @@ const Signin = () => {
           <h2 className="form-title">Sign in</h2>
           <p>
             Don't have an account yet?{' '}
-            {/*<Link className="form-link">*/}
+            <Link className = "form-link" to = "/signup">
             Sign up
-            {/*</Link>*/}
+            </Link>
           </p>
 
           <label htmlFor="email">Email</label>
