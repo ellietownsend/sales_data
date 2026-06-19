@@ -4,6 +4,7 @@ import Dashboard from './routes/Dashboard.jsx';
 import Signin from "./components/Signin";
 import Signup from "./components/Signup.jsx";
 import RootRedirect from "./routes/RootRedirectory.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 const routes = [
     {
@@ -13,10 +14,10 @@ const routes = [
     },
     {
         path: '/dashboard',
-        element: <>
+        element: <ProtectedRoute>
             <Header /> 
             <Dashboard />
-        </>
+        </ProtectedRoute>
     }, 
     {
         path: '/signup',
