@@ -3,24 +3,30 @@ import Header from "./components/Header";
 import Dashboard from './routes/Dashboard.jsx';
 import Signin from "./components/Signin";
 import Signup from "./components/Signup.jsx";
+import RootRedirect from "./routes/RootRedirectory.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 const routes = [
     {
-        path: ('/'),
-        element: <Signin />
+        path: '/',
+        element: <RootRedirect />
 
     },
     {
-        path: ('/dashboard'),
-        element: <>
+        path: '/dashboard',
+        element: <ProtectedRoute>
             <Header /> 
             <Dashboard />
-        </>
+        </ProtectedRoute>
     }, 
     {
-        path: ('/signup'),
+        path: '/signup',
         element: <Signup />
     }, 
+    {
+        path: '/signin',
+        element: <Signin />
+    }
 ];
 
 export const router = createBrowserRouter(routes)
