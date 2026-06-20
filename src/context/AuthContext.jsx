@@ -27,23 +27,30 @@ export const AuthContextProvider = ({ children }) => {
     console.log('Session changed:', session);
   })
 
-  async function fetchUsers() {
-    try {
-      const { data, error } = await supabase
-        .from('user_profiles')
-        .select('id, name, account_type');
-      if (error) {
-        throw error;
-      }
-      console.log('Fetched users:', data);
-      setUsers(data);
-    } catch (error) {
-      console.error('Error fetching users:', error.message);
-    }
-  };
-  fetchUsers();
-
   }, []);
+
+  
+
+  useEffect(() => {
+    if (!session) return;
+
+    async function fetchUsers() {
+      try {
+        const { data, error } = await supabase
+          .from('user_profiles')
+          .select('id, name, account_type');
+        if (error) {
+          throw error;
+        }
+        console.log('Fetched users:', data);
+        setUsers(data);
+      } catch (error) {
+        console.error('Error fetching users:', error.message);
+      }
+    };
+    fetchUsers();
+
+  }, [session]);
 
   //Auth functions
   const signInUser = async (email, password) => {
@@ -103,7 +110,7 @@ export const AuthContextProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ session, signInUser, signOut, signUpNewUser }}>
+    <AuthContext.Provider value={{ session, signInUser, signOut, signUpNewUser, users }}>
       {children}
     </AuthContext.Provider>
   );

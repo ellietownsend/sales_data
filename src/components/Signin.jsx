@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import Dashboard from '../routes/Dashboard';
 
 
+
 const Signin = () => {
   const { signInUser } = useAuth();
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const Signin = () => {
         return new Error(signInError);
       }
       if (success && data?.session) {
-        navigate('/dashboard')
+        navigate('/dashboard');
         return null;
       }
       return null;
@@ -47,8 +48,8 @@ const Signin = () => {
           <h2 className="form-title">Sign in</h2>
           <p>
             Don't have an account yet?{' '}
-            <Link className = "form-link" to = "/signup">
-            Sign up
+            <Link className="form-link" to="/signup">
+              Sign up
             </Link>
           </p>
 
@@ -86,7 +87,7 @@ const Signin = () => {
             className="form-button"
             aria-busy={isPending}
           >
-            {isPending ? 'Signing in' : 'Sign In'}
+            {isPending ? 'Signing in...' : 'Sign In'}
           </button>
 
           {error && (
