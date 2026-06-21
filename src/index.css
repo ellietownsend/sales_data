@@ -256,6 +256,64 @@ input:disabled {
   margin: 16px 16px 16px 0; 
 }
 
+.account-type-section {
+  border: none;
+  padding: 0;
+  margin: 8px 0;
+}
+
+.account-type-section legend {
+  margin-bottom: 12px;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.radio-group {
+  display: flex;
+  gap: 12px;
+}
+
+.role-option {
+  flex: 1;
+}
+
+.role-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  height: 50px;
+  padding: 0 16px;
+
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-md);
+  background: var(--input-bg);
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.role-option:hover {
+  border-color: #d1d5db;
+  background: var(--surface-soft);
+}
+
+.role-option input[type="radio"] {
+  margin: 0;
+  accent-color: #111827;
+}
+
+.role-option:has(input:checked) {
+  border-color: var(--input-focus);
+  background: rgba(167, 243, 208, 0.15);
+  box-shadow: 0 0 0 3px rgba(167, 243, 208, 0.25);
+}
+
+.role-option span {
+  font-size: 15px;
+  color: var(--text);
+}
+
 
 
 @keyframes fadeIn {
