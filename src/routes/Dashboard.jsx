@@ -4,64 +4,77 @@ import { Chart } from 'react-charts'
 import Form from '../components/Form';
 
 function Dashboard() {
-    const [metrics, setMetrics] = useState([]);
+  const [metrics, setMetrics] = useState([]);
 
-    useEffect(() => {
-        fetchMetrics();
+  useEffect(() => {
+    fetchMetrics();
 
-    const channel = supabase 
-        .channel('deal_changes')
-        .on(
-            'postgres_changes',
-            { 
-                event: '*',
-                schema: 'public',
-                table: 'sales_deals'
-            },
-            (payload) => {
-                fetchMetrics();
 
-            })
-            .subscribe()
+    const channel = supabase
+      .channel('deal-changes')
+      .on(
+        'postgres_changes',
+        { 
+          event: '*', 
+          schema: 'public', 
+          table: 'sales_deals' 
+        },
+        payload => {
+          console.log(payload);
+          fetchMetrics();
+        })
+      .subscribe();
 
     return () => {
-        supabase.removeChannel(channel);
+      supabase.removeChannel(channel);
     };
+  }, []);
 
-    }, []);
 
-    async function fetchMetrics(){
-        try{
-            const response = await supabase
-            .from('sales_deals')
-            .select(
-                `
-                name,
-                value
-                `,
-            )
-            console.log(response);
-            setMetrics(response.data);
-    
-        }catch(error){
-            console.error('Error fetching metrics:', error);
-        } 
+  async function fetchMetrics() {
+    try {
+      const { data, error } = await supabase
+        .from('sales_deals')
+        .select(
+          `
+          value.sum(),
+          ...user_profiles!inner(
+            name
+          )
+          `,
+        );
+      if (error) {
+        throw error;
+      }
+      console.log("Fetched metrics:", data);
+      setMetrics(data);
+    } catch (error) {
+      console.error('Error fetching metrics:', error.message);
     }
+  }
 
-    console.log(metrics)
-    const chartData = [
-        {
-            data: metrics.map((m) => ({ 
-                primary: m.name, 
-                secondary: m.value 
-            })),
-        },
-    ];
-    const primaryAxis = {
+  const chartData = [
+    {
+      data: metrics.map((m) => ({
+        primary: m.name,
+        secondary: m.sum,
+      })),
+    },
+  ];
+
+  const primaryAxis = {
     getValue: (d) => d.primary,
     scaleType: 'band',
     padding: 0.2,
     position: 'bottom',
+  };
+
+  function y_max() {
+    if (metrics.length > 0) {
+      const maxSum = Math.max(...metrics.map((m) => m.sum));
+      return maxSum + 2000;
+    };
+    return 5000;
   };
 
   const secondaryAxes = [
@@ -77,21 +90,20 @@ function Dashboard() {
     },
   ];
 
-  function y_max() {
-    if (metrics.length > 0) {
-      const maxValue = Math.max(...metrics.map((m) => m.value));
-      return maxValue + 2000;
-    }
-    return 5000; 
-}
-
-
   return (
-    <div className="dashboard-wrapper">
-      <div className="chart-container">
+    <div
+      className="dashboard-wrapper"
+      role="region"
+      aria-label="Sales dashboard"
+    >
+      <div
+        className="chart-container"
+        role="region"
+        aria-label="Sales chart and data"
+      >
         <h2>Total Sales This Quarter ($)</h2>
-        <div style={{ height: '400px' }}>
-            <Chart
+        <div style={{ flex: 1 }}>
+          <Chart
             options={{
               data: chartData,
               primaryAxis,
@@ -103,12 +115,11 @@ function Dashboard() {
               },
             }}
           />
-         
         </div>
       </div>
-      <Form metrics={metrics} />
+      <Form />
     </div>
   );
-}
+};
 
 export default Dashboard;

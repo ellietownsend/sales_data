@@ -1,31 +1,38 @@
 import { useActionState } from 'react';
 import supabase from '../../supabase-client';
+import { useAuth } from '../context/AuthContext';
 
-function Form({ metrics }) {
+function Form() {
+  const { users, session } = useAuth();
   const [error, submitAction, isPending] = useActionState(
   async (_, formData) => {
+    const submittedName = formData.get('name');
+    const user = users.find((u) => u.name === submittedName);
+
     const newDeal = {
-      name: formData.get('name'),
+      user_id: user.id, // using id from found object
       value: Number(formData.get('value')),
     };
-
     const { data: deal, error: fetchError } = await supabase
       .from('sales_deals')
       .select('value')
-      .eq('name', newDeal.name)
+      .eq('user_id', newDeal.user_id)
       .single();
 
     if (fetchError) {
       console.error('Fetch error:', fetchError.message);
       return new Error('Failed to fetch deal');
     }
-
-    const { error: updateError } = await supabase
+    console.log('user.id:', user.id);
+    const { data, error: updateError } = await supabase
       .from('sales_deals')
       .update({
         value: deal.value + newDeal.value,
       })
-      .eq('name', newDeal.name);
+      .select()
+      .eq('user_id', newDeal.user_id);
+      console.log('Updated rows:', data);
+
 
     if (updateError) {
       console.error('Update error:', updateError.message);
@@ -37,10 +44,12 @@ function Form({ metrics }) {
   null
 );
 
+const currentUser = users.find((user) => user.id === session?.user?.id)
+
   const generateOptions = () => {
-    return metrics.map((metric) => (
-      <option key={metric.name} value={metric.name}>
-        {metric.name}
+    return users.map((user) => (
+      <option key={user.id} value={user.name}>
+        {user.name}
       </option>
     ));
   };
@@ -56,20 +65,35 @@ function Form({ metrics }) {
           Use this form to add a new sales deal. Select a sales rep and enter
           the amount.
         </div>
-
-        <label htmlFor="deal-name">
-          Name:
-          <select
-            id="deal-name"
-            name="name"
-            defaultValue={metrics?.[0]?.name || ''}
-            aria-required="true"
-            aria-invalid={error ? 'true' : 'false'}
-            disabled={isPending}
-          >
-            {generateOptions()}
-          </select>
-        </label>
+        {currentUser?.account_type === 'rep' ? (
+          <label htmlFor="deal-name">
+            Name:
+            <input
+              id="deal-name"
+              type="text"
+              name="name"
+              value={currentUser?.name || ''}
+              readOnly
+              className="rep-name-input"
+              aria-label="Sales representative name"
+              aria-readonly="true"
+            />
+          </label>
+        ) : (
+          <label htmlFor="deal-name">
+            Name:
+            <select
+              id="deal-name"
+              name="name"
+              defaultValue={users[0]?.name || ''}
+              aria-required="true"
+              aria-invalid={error ? 'true' : 'false'}
+              disabled={isPending}
+            >
+              {generateOptions()}
+            </select>
+          </label>
+        )}
 
         <label htmlFor="deal-value">
           Amount: $

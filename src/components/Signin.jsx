@@ -3,7 +3,6 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import Dashboard from '../routes/Dashboard';
 
-
 const Signin = () => {
   const { signInUser } = useAuth();
   const navigate = useNavigate();
@@ -23,7 +22,7 @@ const Signin = () => {
         return new Error(signInError);
       }
       if (success && data?.session) {
-        navigate('/dashboard')
+        navigate('/dashboard');
         return null;
       }
       return null;
@@ -31,30 +30,28 @@ const Signin = () => {
   );
 
   return (
-    <>
-      <h1 className="landing-header">Paper Like A Boss</h1>
-      <div className="sign-form-container">
-        <form
-          action={submitAction}
-          aria-label="Sign in form"
-          aria-describedby="form-description"
-        >
-          <div id="form-description" className="sr-only">
+    <div className = "page">
+      <div className = "auth-card">
+
+        <div className="auth-left">
+            <h1 className="auth-title">Sign in</h1>
+
+    
+
+            <form
+            className="auth-form"
+              action={submitAction}
+              aria-label="Sign in form"
+              aria-describedby="form-description"
+            >
+            <div id="form-description" className="sr-only">
             Use this form to sign in to your account. Enter your email and
             password.
-          </div>
-
-          <h2 className="form-title">Sign in</h2>
-          <p>
-            Don't have an account yet?{' '}
-            <Link className = "form-link" to = "/signup">
-            Sign up
-            </Link>
-          </p>
+            </div>
 
           <label htmlFor="email">Email</label>
           <input
-            className="form-input"
+            className="auth-input"
             type="email"
             name="email"
             id="email"
@@ -68,7 +65,7 @@ const Signin = () => {
 
           <label htmlFor="password">Password</label>
           <input
-            className="form-input"
+            className="auth-input"
             type="password"
             name="password"
             id="password"
@@ -83,24 +80,39 @@ const Signin = () => {
           <button
             type="submit"
             disabled={isPending}
-            className="form-button"
+            className="auth-button"
             aria-busy={isPending}
           >
-            {isPending ? 'Signing in' : 'Sign In'}
+            {isPending ? 'Signing in...' : 'Sign In'}
           </button>
 
-          {error && (
+           <p>
+              Don't have an account yet?{' '}
+              <Link className="auth-link" to="/signup">
+                Sign up
+              </Link>
+            </p>
+
+         {error && (
             <div
               id="signin-error"
               role="alert"
-              className="sign-form-error-message"
             >
               {error.message}
             </div>
           )}
-        </form>
-      </div>
-    </>
+
+          </form>
+        </div>
+        <div className="auth-right">
+            <img src = "https://media.istockphoto.com/id/2172317014/photo/happy-hispanic-man-working-on-laptop-at-home.jpg?s=612x612&w=0&k=20&c=9evc002hmjsuha6TiO8OftVTuZIE71Hr3qhmq8vRRH0="
+            className = "auth-image"
+            />
+          
+        </div>
+
+    </div>
+</div>
   );
 };
 
