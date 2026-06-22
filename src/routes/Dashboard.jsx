@@ -137,9 +137,10 @@ function Dashboard() {
               ],
 
               tooltip: {
-                show: true,
+                show:true,
               },
-
+          
+        
               primaryCursor: false,
               secondaryCursor: false,
             }}

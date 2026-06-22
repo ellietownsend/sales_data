@@ -11,13 +11,6 @@
   align-items: center;
   background: #ffffff;
   border: 1px solid #e5ece6;
-  border-radius: 16px;
-
-  box-shadow:
-    0 4px 10px rgba(0, 0, 0, 0.03),
-    0 1px 2px rgba(0, 0, 0, 0.02);
-
-  animation: slideInUp 0.4s ease-out;
 }
 
 
