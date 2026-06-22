@@ -1,6 +1,7 @@
 import { useActionState } from 'react';
 import supabase from '../../supabase-client';
 import { useAuth } from '../context/AuthContext';
+import './form.css';
 
 function Form() {
   const { users, session } = useAuth();

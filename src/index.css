@@ -209,14 +209,7 @@ button {
 
 
 
-.amount-input {
-  width: 60px;
-  margin-left: 2px;
-  background-color: #ffffff;
-  color: black;
-  border-radius: 5px;
-  border: 1px solid grey;
-}
+
 
 select {
   border-radius: 5px;

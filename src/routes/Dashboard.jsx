@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import supabase from "../../supabase-client";
 import { Chart } from 'react-charts'
 import Form from '../components/Form';
+import './dashboard.css';
 
 function Dashboard() {
   const [metrics, setMetrics] = useState([]);
@@ -65,8 +66,17 @@ function Dashboard() {
   const primaryAxis = {
     getValue: (d) => d.primary,
     scaleType: 'band',
-    padding: 0.2,
+    padding: 0.3,
     position: 'bottom',
+    style: {
+        tick: {
+          fill: '#6b7a6d',
+          fontSize: 12
+        },
+        axis: {
+          stroke: 'transparent'
+        }
+  }
   };
 
   function y_max() {
@@ -83,14 +93,24 @@ function Dashboard() {
       scaleType: 'linear',
       min: 0,
       max: y_max(),
-      padding: {
-        top: 20,
-        bottom: 40,
+      style: {
+      tick: {
+        fill: '#6b7a6d',
+        fontSize: 12
       },
-    },
+      grid: {
+        stroke: 'rgba(0,0,0,0.05)',
+        strokeDasharray: '4 4'
+      },
+      axis: {
+        stroke: 'transparent'
+      }
+    }
+  }
   ];
 
   return (
+    <>
     <div
       className="dashboard-wrapper"
       role="region"
@@ -109,16 +129,26 @@ function Dashboard() {
               primaryAxis,
               secondaryAxes,
               type: 'bar',
-              defaultColors: ['#58d675'],
+
+              defaultColors: [
+                '#10b981',
+                '#059669',
+                '#047857'
+              ],
+
               tooltip: {
-                show: false,
+                show: true,
               },
+
+              primaryCursor: false,
+              secondaryCursor: false,
             }}
           />
         </div>
       </div>
-      <Form />
     </div>
+      <Form />
+      </>
   );
 };
 
