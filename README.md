@@ -9,6 +9,9 @@
 <br> ![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react) ![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite) ![Supabase](https://img.shields.io/badge/Supabase-Backend-3ECF8E?style=for-the-badge&logo=supabase) ![Postgres](https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=for-the-badge&logo=postgresql) 
 <br>
 
+## Live Demo
+https://business-sales-dashboard-app.netlify.app/signin
+
 > This project demonstrates full-stack development concepts including authentication, authorization, database security, realtime subscriptions, state management, and data visualization.
 
 
