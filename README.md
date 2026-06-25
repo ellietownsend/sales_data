@@ -10,7 +10,8 @@
 <br>
 
 ## Live Demo
-https://business-sales-dashboard-app.netlify.app/signin
+business-sales-dashboard-app.netlify.app
+
 
 > This project demonstrates full-stack development concepts including authentication, authorization, database security, realtime subscriptions, state management, and data visualization.
 
