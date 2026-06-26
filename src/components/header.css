@@ -1,0 +1,186 @@
+.header-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.dashboard-header {
+  display: flex;
+  padding: 1rem .5rem;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e5ece6;
+}
+
+
+
+.dashboard-brand {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding-left: 2rem;
+}
+
+.dashboard-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+  background: rgba(47, 125, 90, 0.12);
+  color: #2f7d5a;
+
+  flex-shrink: 0;
+}
+
+.dashboard-brand h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1f2937;
+}
+
+.dashboard-brand p {
+  margin: .5rem 0;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+/* ===== USER AREA ===== */
+
+.dashboard-user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Avatar inspired by Radix Avatar */
+
+.avatar {
+  width: 3rem;
+  height: 3rem;
+
+  border-radius: 999px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f1f5f2;
+  color: #2f7d5a;
+
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin: 1rem 2.1rem;
+
+  border: 2px solid rgba(47, 125, 90, 0.2);
+
+  transition: all 0.3s ease;
+}
+
+.avatar:hover {
+  border-color: rgba(47, 125, 90, 0.4);
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.user-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding-bottom: .4rem;
+  color: #1f2937;
+}
+
+.user-role {
+  font-size: 1rem;
+  color: #6b7280;
+}
+
+/* ===== BUTTON ===== */
+
+.signout-btn {
+  border: none;
+  margin: 1rem;
+  padding: 0.65rem 2rem;
+  margin-left: 6rem;
+  border-radius: 12px;
+  background: #2f7d5a;
+  color: white;
+  font-size: 1rem;
+
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.signout-btn:hover {
+  background: #25684b;
+  transform: translateY(-1px);
+}
+
+.signout-btn:active {
+  transform: translateY(0);
+}
+
+/* ===== ERROR ===== */
+
+.error-message {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+
+  padding: 0.75rem 1rem;
+
+  background: #fee2e2;
+  color: #b91c1c;
+
+  border-radius: 10px;
+  font-size: 0.875rem;
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .dashboard-user {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .dashboard-brand h1 {
+    font-size: 1.35rem;
+  }
+
+  .dashboard-brand p {
+    font-size: 0.8rem;
+  }
+}
+
+/* ===== ANIMATION ===== */
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

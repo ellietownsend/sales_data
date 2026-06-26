@@ -9,10 +9,10 @@ const Signup = () => {
 
   const [error, submitAction, isPending] = useActionState(
     async (previousState, formData) => {
-       email = formData.get('email');
-       password = formData.get('password');
-       name = formData.get('name'),
-       accountType = formData.get('account-type')
+       const name = formData.get('name');
+       const accountType = formData.get('account-type');
+       const email = formData.get('email');
+       const password = formData.get('password');
 
       const {
         success,
@@ -42,6 +42,7 @@ const Signup = () => {
           <div id="form-description" className="sr-only">
             Start tracking sales activity and managing your team in one place.
             </div>
+
           <form 
             className="auth-form" 
             action={submitAction} 
@@ -51,20 +52,19 @@ const Signup = () => {
               <div 
                 id="form-description" 
                 className="sr-only"> 
-                Use this form to create a new account. Enter your email and password.
+                Use this form to create a new account. Enter name, email, password, and account type.
               </div>
             
             <label htmlFor="name">
               Name
             </label>
 
-
           <input 
             className="auth-input" 
             type="text" 
             name="name" 
             id="name" 
-            placeholder=""
+            placeholder="Jane Doe"
             required 
             disabled={isPending} 
             aria-required="true" 
@@ -82,7 +82,9 @@ const Signup = () => {
             name="email" 
             id="email" 
             required 
-            disabled={isPending} aria-required="true" 
+            placeholder='jane@example.com'
+            disabled={isPending} 
+            aria-required="true" 
             aria-invalid={error ? 'true' : 'false'} 
             aria-describedby={error ? 'signup-error' : undefined} 
           />
@@ -103,30 +105,30 @@ const Signup = () => {
           />
 
          <fieldset className="account-type-section">
-  <legend>Account Type</legend>
+        <legend>Account Type</legend>
 
-  <div className="radio-group">
-    <label className="role-option">
-      <input
-        type="radio"
-        name="account-type"
-        value="admin"
-        required
-      />
-      <span>Admin</span>
-    </label>
+      <div className="radio-group">
+        <label className="role-option">
+          <input
+            type="radio"
+            name="account-type"
+            value="admin"
+            required
+          />
+          <span>Admin</span>
+        </label>
 
-    <label className="role-option">
-      <input
-        type="radio"
-        name="account-type"
-        value="rep"
-        required
-      />
-      <span>Sales Rep</span>
-    </label>
-  </div>
-</fieldset>
+        <label className="role-option">
+          <input
+            type="radio"
+            name="account-type"
+            value="rep"
+            required
+          />
+            <span>Sales Rep</span>
+          </label>
+        </div>
+      </fieldset>
 
           <button
             type="submit"
